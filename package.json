@@ -1,0 +1,11 @@
+{
+  "name": "rapid_site",
+  "version": "1.0.0",
+  "description": "速攻サイト作成環境",
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-slim": "^0.3.0"
+  }
+}
