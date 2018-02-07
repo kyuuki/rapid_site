@@ -6,7 +6,7 @@ var sass = require('gulp-sass');
 var browserSync = require('browser-sync').create();
 
 gulp.task('html', function() {
-  gulp.src(['app/**/*.html', 'app/favicon.ico'])
+  gulp.src(['app/**/*.html', 'app/favicon.ico', 'app/*.png'])
     .pipe(gulp.dest('dist'))
     .pipe(browserSync.stream());
 });
