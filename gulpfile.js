@@ -3,7 +3,11 @@
 var gulp = require('gulp');
 var slim = require('gulp-slim');
 var sass = require('gulp-sass');
+var sitemap = require('gulp-sitemap');
 var browserSync = require('browser-sync').create();
+
+// https://gulpjs.org/recipes/using-external-config-file
+var config = require('./config.json');
 
 gulp.task('html', function() {
   gulp.src(['app/**/*.html', 'app/favicon.ico', 'app/*.png'])
@@ -38,6 +42,14 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest('dist/scripts'))
     .pipe(browserSync.stream());
 });
+
+gulp.task('sitemap', function() {
+  gulp.src('dist/**/*.html', { read: false })
+    .pipe(sitemap({
+      siteUrl: config.siteUrl
+    }))
+    .pipe(gulp.dest('dist'));
+});
     
 gulp.task('serve', ['default'], function() {
   browserSync.init({
@@ -51,4 +63,3 @@ gulp.task('serve', ['default'], function() {
 });
 
 gulp.task('default', ['html', 'slim', 'images', 'styles', 'scripts']);
-
