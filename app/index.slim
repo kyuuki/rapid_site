@@ -7,8 +7,14 @@ html lang="ja"
 
     title 速攻サイト作成環境
 
-    / https://www.bootstrapcdn.com/bootswatch/
-    link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/cosmo/bootstrap.min.css"
+    / Font Awesome
+    link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    / Bootstrap core CSS
+    link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+    / Material Design Bootstrap
+    link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet"
+
+    link href="styles/style.css" rel="stylesheet"
 
     / Favicon
     / https://www.freefavicon.com/freefavicons/software/iconinfo/software-update-urgent-152-212273.html
@@ -16,143 +22,175 @@ html lang="ja"
     link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png"
 
     / ここに Google Analytics タグを埋め込む
+
   body
-    .jumbotron
+    header
+      .view style="background-image: url('https://mdbootstrap.com/img/Photos/Others/nature7.jpg'); background-repeat: no-repeat; background-size: cover;"
+        .mask.rgba-black-light.d-flex.justify-content-center.align-items-center
+          .text-center.white-text.mx-5.wow.fadeIn
+            h1.mb-4
+              strong 速攻サイト生成環境
+            p
+              strong 本番で運用できるレベルの静的サイトをお手軽に作成
+            a.btn.btn-outline-white.btn-lg target="_blank" href="https://goo.gl/forms/vghllwTszoI5e9Vd2"
+              | お問い合わせ
+              i.fa.fa-graduation-cap.ml-2
+
+    main
       .container
-        h1.display-4 速攻サイト作成環境
-        p.lead 本番で運用できるレベルの静的サイトをお手軽に作成
+      
+        section.mt-5.wow.fadeIn
+          .row
+            .col-md-12.mb-4
+              h2.h3.mb-3 目標
+              ul
+                li 本番で運用できるレベルの静的サイトをお手軽に作れる
+                ul
+                  li それなりのデザイン
+                  li アクセス解析ができる
+                  li 閲覧者から連絡が取れる
+                  li 広告を貼ることができる
+                li できるだけライトに、でも便利に
+                ul
+                  li Emacs と Slim が微妙。。。
+                li vi でもそれなりに編集できる
 
-        p.lead
-          a.btn.btn-primary.btn-lg href="https://goo.gl/forms/vghllwTszoI5e9Vd2" お問い合わせ
-
-    .container
-
-      h2 目標
-
-      ul
-        li 本番で運用できるレベルの静的サイトをお手軽に作れる
-        ul
-          li それなりのデザイン
-          li アクセス解析ができる
-          li 閲覧者から連絡が取れる
-          li 広告を貼ることができる
-        li できるだけライトに、でも便利に
-        ul
-          li Emacs と Slim が微妙。。。
-        li vi でもそれなりに編集できる
-
-      h2 概要
-
-      ul
-        li 公開は Amazon S3 で行う
-        li 編集は Linux 上の Emacs (CUI) で行う
-        li デザインは CDN の Bootswatch を使う
-
-      h2 採用した技術、ツール
-
-      p README.md も参照。
-
-      ul
-        li
-          a href="https://getbootstrap.com/docs/4.0/getting-started/introduction/" target="_blank"
-            | Bootstrap 4.0.0
-          ul
-            li
-              a href="https://bootswatch.com/" target="_blank"
-                | Bootswatch 4.0.0
-        li
-          | Node.js
-          ul
-            li gulp
-        li Slim
-        li Sass
-        li Amazon S3
-        ul
-          li AWS CLI
-        li Amazon Route 53
-        li
-          a href="http://emacs.akoba.xyz" target="_blank" Emacs
-        li Google Analytics
-        li Google Search Console
-
-      h2 開発環境構築手順
-
-      h3 前提
-
-      ul
-        li ベースとなるドメインが取得済み (このサブドメインで運用)
-        li Emacs による Web 開発環境が構築済み
-        li AWS アカウント取得済み
-
-      h3 手順
-
-      ol
-        li Node.js インストール
-        li gulp インストール
-        li Ruby インストール
-        li Slim インストール
-        li AWS CLI インストール
-
-      h2 サイト生成手順
-
-      h3 手順
-
-      ol
-        li
-          | タイトル、サブドメイン名を決定 (サブドメイン名にアンダースコア不可)
-          pre
-            code
-              | e.g. タイトル: 速攻サイト作成環境、サブドメイン名: rapid-site
-        li
-          | GitHub より rapid_site を任意のディレクトリ (原則、サブドメイン名) に clone
-          pre
-            code
-              | $ git clone http://kyuuki.github.com/rapid_site <サブドメイン名>
-        li
-          | package.json を編集
-          br
-          | name をサブドメイン名に
-          br
-          | description をタイトルに
-        li
-          | gulp を実行
-          pre
-            code
-              | $ npm install gulp
-              br
-              | $ gulp serve
-        li app/index.slim を編集
-        li Google Analytics でプロパティを作成し、トラッキングコードを貼り付け
-        li Amazon S3 にアップロード
-        ol
-          li バケット作成
-            pre
-              code
-                | $ aws s3 mb s3://&lt;サブドメイン名&gt;.akoba.xyz
-          li  S3 にファイルをコピー
-            pre
-              code
-                | $ aws s3 cp dist/ s3://&lt;サブドメイン名&gt;.akoba.xyz/ --recursive
-          li Web サイトとして設定
-            pre
-              code
-                | $ aws s3 website s3://&lt;サブドメイン名&gt;.akoba.xyz/ --index-document index.html
-          li バケットポリシーを設定
-            | (参考: <a href="http://dotinstall.com/lessons/basic_aws/9516 target="_blank">ドットインストール</a>)
-        li Route 53 でドメイン設定
-           | ベースとなるドメイン名を選択
-           | [Create Record Set] でサブドメイン名の A レコードを ALIAS で作成 (Alias Target に S3 website endpoints としてでてくるはず)
-        li Google Analytics フィルターの設定
-        li Google Search Console にプロパティを追加
-        li 管理シートに記入
-
-    footer
-      .container
         hr
-        p.text-right.text-muted
-          | &copy; 2018 rapid-site.akoba.xyz All Rights Reserved.
 
-    / https://getbootstrap.com/docs/4.0/getting-started/introduction/#js
-    script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"
-    script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"
-    script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"
+        section.mt-5.wow.fadeIn
+          .row
+            .col-md-12.mb-4
+              h2.h3.mb-3 概要
+              ul
+                li 公開は Amazon S3 で行う
+                li 編集は Linux 上の Emacs (CUI) で行う
+                li デザインは CDN の Material Design for Bootstrap 4 を利用
+
+        hr
+
+        section.mt-5.wow.fadeIn
+          .row
+            .col-md-12.mb-4
+              h2.h3.mb-3 採用した技術、ツール
+              p.grey-text README.md も参照。
+              ul
+                li
+                  a href="https://getbootstrap.com/docs/4.0/getting-started/introduction/" target="_blank"
+                    | Bootstrap 4.0.0
+                  ul
+                    li
+                      a href="https://mdbootstrap.com/" target="_blank"
+                        | Material Design for Bootstrap 4
+                li
+                  | Node.js
+                  ul
+                    li gulp
+                li Slim
+                li Sass
+                li
+                  | Amazon S3
+                  ul
+                    li AWS CLI
+                    li Amazon Route 53
+                li
+                  a href="http://emacs.akoba.xyz" target="_blank" Emacs
+                li Google Analytics
+                li
+                  | Google Search Console
+                  ul
+                    li 公開は Amazon S3 で行う
+                    li 編集は Linux 上の Emacs (CUI) で行う
+                    li デザインは CDN の Bootswatch を使う
+
+        hr
+
+        section.mt-5.wow.fadeIn
+          .row
+            .col-md-12.mb-4
+              h2.h3.mb-3 開発環境構築手順
+
+              h3.h4 前提
+              ul
+                li ベースとなるドメインが取得済み (このサブドメインで運用)
+                li Emacs による Web 開発環境が構築済み
+                li AWS アカウント取得済み
+
+              h3.h4 手順
+              ol
+                li Node.js インストール
+                li gulp インストール
+                li Ruby インストール
+                li Slim インストール (必要？)
+                li AWS CLI インストール
+
+        hr
+
+        section.mt-5.wow.fadeIn
+          .row
+            .col-md-12.mb-4
+              h2.h3.mb-3 サイト生成手順
+
+              h3.h4 手順
+              ol
+                li
+                  | タイトル、サブドメイン名を決定 (サブドメイン名にアンダースコア不可)
+                  pre
+                    code
+                      | e.g. タイトル: 速攻サイト作成環境、サブドメイン名: rapid-site
+                li
+                  | GitHub より rapid_site を任意のディレクトリ (原則、サブドメイン名) に clone
+                  pre
+                    code
+                      | $ git clone http://kyuuki.github.com/rapid_site <サブドメイン名>
+                li
+                  | package.json を編集
+                  br
+                  | name をサブドメイン名に
+                  br
+                  | description をタイトルに
+                li
+                  | gulp を実行
+                  pre
+                    code
+                      | $ npm install gulp
+                      br
+                      | $ gulp serve
+                li app/index.slim を編集
+                li Google Analytics でプロパティを作成し、トラッキングコードを貼り付け
+                li Amazon S3 にアップロード
+                ol
+                  li バケット作成
+                    pre
+                      code
+                        | $ aws s3 mb s3://&lt;サブドメイン名&gt;.akoba.xyz
+                  li  S3 にファイルをコピー
+                    pre
+                      code
+                        | $ aws s3 cp dist/ s3://&lt;サブドメイン名&gt;.akoba.xyz/ --recursive
+                  li Web サイトとして設定
+                    pre
+                      code
+                        | $ aws s3 website s3://&lt;サブドメイン名&gt;.akoba.xyz/ --index-document index.html
+                  li バケットポリシーを設定
+                    | (参考: <a href="http://dotinstall.com/lessons/basic_aws/9516" target="_blank">ドットインストール</a>)
+                li Route 53 でドメイン設定
+                   | ベースとなるドメイン名を選択
+                   | [Create Record Set] でサブドメイン名の A レコードを ALIAS で作成 (Alias Target に S3 website endpoints としてでてくるはず)
+                li Google Analytics フィルターの設定
+                li Google Search Console にプロパティを追加
+                li 管理シートに記入
+
+    footer.page-footer.text-center.font-small.mt-4.wow.fadeIn
+      .footer-copyright.py-3
+        | &copy; 2018 rapid-site.akoba.xyz All Rights Reserved.
+
+    / JQuery
+    script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+    / Bootstrap tooltips
+    script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"
+    / Bootstrap core JavaScript
+    script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"
+    / MDB core JavaScript
+    script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"
+    javascript:
+      new WOW().init();

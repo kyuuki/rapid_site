@@ -5,5 +5,5 @@
 - [Bootswatch](https://bootswatch.com/)
 
 ## ツール
-- [gulp](https://gulpjs.com/)
+- [gulp 3.9.x](https://gulpjs.com/)
 
